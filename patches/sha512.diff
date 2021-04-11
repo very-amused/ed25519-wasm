@@ -1,0 +1,22 @@
+--- sha512/hash.c	2021-04-11 17:06:36.234318955 -0400
++++ sha512_patched/hash.c	2021-04-11 17:08:31.634806683 -0400
+@@ -4,8 +4,8 @@
+ Public domain.
+ */
+ 
+-#include "crypto_hashblocks_sha512.h"
+-#include "crypto_hash.h"
++#include "blocks/blocks.h"
++#include "sha512.h"
+ 
+ #define blocks crypto_hashblocks_sha512
+ 
+@@ -22,7 +22,7 @@
+ 
+ typedef unsigned long long uint64;
+ 
+-int crypto_hash(unsigned char *out,const unsigned char *in,unsigned long long inlen)
++int crypto_hash_sha512(unsigned char *out,const unsigned char *in,unsigned long long inlen)
+ {
+   unsigned char h[64];
+   unsigned char padded[256];

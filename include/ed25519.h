@@ -1,0 +1,1 @@
+int ed25519_keypair(unsigned char *seed, unsigned char *pk, unsigned char *sk);

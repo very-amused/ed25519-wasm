@@ -1,0 +1,37 @@
+--- ge.h	2021-04-11 17:26:26.682240678 -0400
++++ ge_patched.h	2021-04-11 17:27:01.123000000 -0400
+@@ -1,5 +1,4 @@
+ #ifndef GE_H
+-#define GE_H
+ 
+ /*
+ ge means group element.
+@@ -50,26 +49,8 @@
+   fe T2d;
+ } ge_cached;
+ 
+-#define ge_frombytes_negate_vartime CRYPTO_NAMESPACE(ge_frombytes_negate_vartime)
+-#define ge_tobytes CRYPTO_NAMESPACE(ge_tobytes)
+-#define ge_p3_tobytes CRYPTO_NAMESPACE(ge_p3_tobytes)
+-
+-#define ge_p2_0 CRYPTO_NAMESPACE(ge_p2_0)
+-#define ge_p3_0 CRYPTO_NAMESPACE(ge_p3_0)
+-#define ge_precomp_0 CRYPTO_NAMESPACE(ge_precomp_0)
+-#define ge_p3_to_p2 CRYPTO_NAMESPACE(ge_p3_to_p2)
+-#define ge_p3_to_cached CRYPTO_NAMESPACE(ge_p3_to_cached)
+-#define ge_p1p1_to_p2 CRYPTO_NAMESPACE(ge_p1p1_to_p2)
+-#define ge_p1p1_to_p3 CRYPTO_NAMESPACE(ge_p1p1_to_p3)
+-#define ge_p2_dbl CRYPTO_NAMESPACE(ge_p2_dbl)
+-#define ge_p3_dbl CRYPTO_NAMESPACE(ge_p3_dbl)
+-
+-#define ge_madd CRYPTO_NAMESPACE(ge_madd)
+-#define ge_msub CRYPTO_NAMESPACE(ge_msub)
+-#define ge_add CRYPTO_NAMESPACE(ge_add)
+-#define ge_sub CRYPTO_NAMESPACE(ge_sub)
+-#define ge_scalarmult_base CRYPTO_NAMESPACE(ge_scalarmult_base)
+-#define ge_double_scalarmult_vartime CRYPTO_NAMESPACE(ge_double_scalarmult_vartime)
++
++
+ 
+ extern void ge_tobytes(unsigned char *,const ge_p2 *);
+ extern void ge_p3_tobytes(unsigned char *,const ge_p3 *);

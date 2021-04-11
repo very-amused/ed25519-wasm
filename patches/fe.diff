@@ -1,0 +1,42 @@
+--- fe.h	2021-04-11 17:18:26.107273486 -0400
++++ fe_patched.h	2021-04-11 17:18:32.350000000 -0400
+@@ -1,7 +1,12 @@
+ #ifndef FE_H
+-#define FE_H
+ 
+-#include "crypto_int32.h"
++#include <stdint.h>
++#include "verify32/verify.h"
++
++typedef int32_t crypto_int32;
++typedef uint32_t crypto_uint32;
++typedef int64_t crypto_int64;
++typedef uint64_t crypto_uint64;
+ 
+ typedef crypto_int32 fe[10];
+ 
+@@ -13,24 +18,6 @@
+ Bounds on each t[i] vary depending on context.
+ */
+ 
+-#define fe_frombytes CRYPTO_NAMESPACE(fe_frombytes)
+-#define fe_tobytes CRYPTO_NAMESPACE(fe_tobytes)
+-#define fe_copy CRYPTO_NAMESPACE(fe_copy)
+-#define fe_isnonzero CRYPTO_NAMESPACE(fe_isnonzero)
+-#define fe_isnegative CRYPTO_NAMESPACE(fe_isnegative)
+-#define fe_0 CRYPTO_NAMESPACE(fe_0)
+-#define fe_1 CRYPTO_NAMESPACE(fe_1)
+-#define fe_cswap CRYPTO_NAMESPACE(fe_cswap)
+-#define fe_cmov CRYPTO_NAMESPACE(fe_cmov)
+-#define fe_add CRYPTO_NAMESPACE(fe_add)
+-#define fe_sub CRYPTO_NAMESPACE(fe_sub)
+-#define fe_neg CRYPTO_NAMESPACE(fe_neg)
+-#define fe_mul CRYPTO_NAMESPACE(fe_mul)
+-#define fe_sq CRYPTO_NAMESPACE(fe_sq)
+-#define fe_sq2 CRYPTO_NAMESPACE(fe_sq2)
+-#define fe_mul121666 CRYPTO_NAMESPACE(fe_mul121666)
+-#define fe_invert CRYPTO_NAMESPACE(fe_invert)
+-#define fe_pow22523 CRYPTO_NAMESPACE(fe_pow22523)
+ 
+ extern void fe_frombytes(fe,const unsigned char *);
+ extern void fe_tobytes(unsigned char *,const fe);

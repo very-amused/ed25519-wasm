@@ -1,0 +1,18 @@
+diff -ruN blocks/blocks.c blocks_patched/blocks.c
+--- blocks/blocks.c	2021-04-11 17:02:05.800155254 -0400
++++ blocks_patched/blocks.c	2021-04-11 17:00:44.478797645 -0400
+@@ -1,4 +1,4 @@
+-#include "crypto_hashblocks.h"
++#include "blocks.h"
+ 
+ typedef unsigned long long uint64;
+ 
+@@ -70,7 +70,7 @@
+   b = a; \
+   a = T1 + T2;
+ 
+-int crypto_hashblocks(unsigned char *statebytes,const unsigned char *in,unsigned long long inlen)
++int crypto_hashblocks_sha512(unsigned char *statebytes,const unsigned char *in,unsigned long long inlen)
+ {
+   uint64 state[8];
+   uint64 a;
