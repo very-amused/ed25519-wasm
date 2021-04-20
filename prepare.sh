@@ -64,6 +64,8 @@ patch_ed25519() {
   cp include/ed25519.h ed25519/ed25519.h
 
   patch ed25519/keypair.c patches/keypair.diff
+  patch -d ed25519 -i ../patches/sc.diff
+  patch ed25519/sign.c patches/sign.diff
 }
 
 [ -x ed25519 ] && rm -rf ed25519

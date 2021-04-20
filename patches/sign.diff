@@ -1,0 +1,18 @@
+--- sign.c	2021-04-11 19:18:38.661135140 -0400
++++ sign_patched.c	2021-04-11 19:18:44.531000000 -0400
+@@ -1,10 +1,11 @@
+ #include <string.h>
+-#include "crypto_sign.h"
+-#include "crypto_hash_sha512.h"
+-#include "ge.h"
++#include "ed25519.h"
++#include "sha512/sha512.h"
+ #include "sc.h"
++#include "ge.h"
+ 
+-int crypto_sign(
++/* sm[0:64] will be the signature, sm[64:] will be the message */
++int ed25519_sign(
+   unsigned char *sm,unsigned long long *smlen,
+   const unsigned char *m,unsigned long long mlen,
+   const unsigned char *sk

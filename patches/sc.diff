@@ -1,0 +1,47 @@
+diff -ruN ed25519/sc.h ed25519_patched/sc.h
+--- ed25519/sc.h	2021-04-19 22:52:22.382292929 -0400
++++ ed25519_patched/sc.h	2021-04-19 22:53:53.467786047 -0400
+@@ -1,14 +1,18 @@
+ #ifndef SC_H
+ #define SC_H
+ 
++#include <stdint.h>
++
++typedef int32_t crypto_int32;
++typedef uint32_t crypto_uint32;
++typedef int64_t crypto_int64;
++typedef uint64_t crypto_uint64;
++
+ /*
+ The set of scalars is \Z/l
+ where l = 2^252 + 27742317777372353535851937790883648493.
+ */
+ 
+-#define sc_reduce CRYPTO_NAMESPACE(sc_reduce)
+-#define sc_muladd CRYPTO_NAMESPACE(sc_muladd)
+-
+ extern void sc_reduce(unsigned char *);
+ extern void sc_muladd(unsigned char *,const unsigned char *,const unsigned char *,const unsigned char *);
+ 
+diff -ruN ed25519/sc_muladd.c ed25519_patched/sc_muladd.c
+--- ed25519/sc_muladd.c	2021-04-19 22:52:22.382292929 -0400
++++ ed25519_patched/sc_muladd.c	2021-04-19 22:54:07.954864666 -0400
+@@ -1,7 +1,4 @@
+ #include "sc.h"
+-#include "crypto_int64.h"
+-#include "crypto_uint32.h"
+-#include "crypto_uint64.h"
+ 
+ static crypto_uint64 load_3(const unsigned char *in)
+ {
+diff -ruN ed25519/sc_reduce.c ed25519_patched/sc_reduce.c
+--- ed25519/sc_reduce.c	2021-04-19 22:52:22.382292929 -0400
++++ ed25519_patched/sc_reduce.c	2021-04-19 22:54:00.617824844 -0400
+@@ -1,7 +1,4 @@
+ #include "sc.h"
+-#include "crypto_int64.h"
+-#include "crypto_uint32.h"
+-#include "crypto_uint64.h"
+ 
+ static crypto_uint64 load_3(const unsigned char *in)
+ {
