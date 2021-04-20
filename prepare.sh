@@ -34,7 +34,7 @@ organize_sources() {
     echo "" >> $all
     echo "/* $s */" >> $all
     echo "" >> $all
-    cat $s | sed '/#include */d'  >> $all
+    cat $s | sed -r "/#include \"(crypto_u?int[0-9]+|crypto_verify_32|${group})\.h\"/d"  >> $all
     rm -f $s
   done
 }
