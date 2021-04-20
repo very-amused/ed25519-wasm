@@ -6,10 +6,10 @@ DEBUG_FLAGS=-g
 DESTDIR?=.
 
 all:
-	emcc $(O) --no-entry -s EXPORTED_FUNCTIONS=$(EXPORTED_FUNCTIONS) -s WASM_BIGINT=1 $(SRC) -o $(DESTDIR)/ed25519.wasm
+	emcc $(O) --no-entry -s EXPORTED_FUNCTIONS=$(EXPORTED_FUNCTIONS) $(SRC) -o $(DESTDIR)/ed25519.wasm
 
 debug:
-	emcc $(DEBUG_FLAGS) --no-entry -s EXPORTED_FUNCTIONS=$(EXPORTED_FUNCTIONS) -s WASM_BIGINT=1 $(SRC) -o $(DESTDIR)/ed25519.wasm
+	emcc $(DEBUG_FLAGS) --no-entry -s EXPORTED_FUNCTIONS=$(EXPORTED_FUNCTIONS) $(SRC) -o $(DESTDIR)/ed25519.wasm
 
 prepare:
 	sh prepare.sh
