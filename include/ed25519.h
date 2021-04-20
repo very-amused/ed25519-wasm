@@ -1,2 +1,2 @@
 int ed25519_keypair(unsigned char *seed, unsigned char *pk, unsigned char *sk);
-int ed25519_sign(unsigned char *sm, unsigned long long *smlen, const unsigned char *m, unsigned long long mlen, const unsigned char *sk);
+int ed25519_sign(unsigned char *sm, const unsigned char *m, unsigned long long mlen, const unsigned char *sk);

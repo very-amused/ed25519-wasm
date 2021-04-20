@@ -1,6 +1,6 @@
---- sign.c	2021-04-11 19:18:38.661135140 -0400
-+++ sign_patched.c	2021-04-11 19:18:44.531000000 -0400
-@@ -1,10 +1,11 @@
+--- sign.c	2021-04-20 05:32:40.296353709 -0400
++++ sign_patched.c	2021-04-20 05:33:04.045000000 -0400
+@@ -1,11 +1,12 @@
  #include <string.h>
 -#include "crypto_sign.h"
 -#include "crypto_hash_sha512.h"
@@ -11,8 +11,18 @@
 +#include "ge.h"
  
 -int crypto_sign(
+-  unsigned char *sm,unsigned long long *smlen,
 +/* sm[0:64] will be the signature, sm[64:] will be the message */
 +int ed25519_sign(
-   unsigned char *sm,unsigned long long *smlen,
++  unsigned char *sm,
    const unsigned char *m,unsigned long long mlen,
    const unsigned char *sk
+ )
+@@ -23,7 +24,6 @@
+   az[31] &= 63;
+   az[31] |= 64;
+ 
+-  *smlen = mlen + 64;
+   memmove(sm + 64,m,mlen);
+   memmove(sm + 32,az + 32,32);
+   crypto_hash_sha512(nonce,sm + 32,mlen + 32);
