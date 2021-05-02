@@ -1,5 +1,4 @@
 supercop-*
 ed25519
-*.wasm
 test/message.txt
 node_modules
