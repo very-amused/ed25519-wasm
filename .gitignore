@@ -1,5 +1,6 @@
 supercop-*
-ed25519*
+ed25519
+build
 !src/*
 *.wasm
 test/message.txt

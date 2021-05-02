@@ -69,22 +69,22 @@ onmessage = async function(evt: MessageEvent<ED25519.Request>): Promise<void> {
   const req = evt.data
 
   switch (req.method) {
-    case ED25519.Methods.LoadED25519:
-      try {
-        ed25519 = await loadED25519()
-      } catch (err) {
-        postError(err)
-        return
-      }
-      postMessage({
-        code: ED25519.ErrorCodes.Success
-      })
-      break
+  case ED25519.Methods.LoadED25519:
+    try {
+      ed25519 = await loadED25519()
+    } catch (err) {
+      postError(err)
+      return
+    }
+    postMessage({
+      code: ED25519.ErrorCodes.Success
+    })
+    break
 
-    default:
-      postMessage({
-        code: ED25519.ErrorCodes.BadRequest
-      })
+  default:
+    postMessage({
+      code: ED25519.ErrorCodes.BadRequest
+    })
   }
 
 }
