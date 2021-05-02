@@ -6,6 +6,11 @@
   "author": "very-amused <very-amused@pm.me>",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "build": "rollup -c",
+    "build:all": "make && yarn run build",
+    "clean": "rm -rf build runtime"
+  },
   "devDependencies": {
     "@rollup/plugin-typescript": "^8.2.1",
     "rollup": "^2.46.0",

@@ -1,7 +1,7 @@
 supercop-*
 ed25519
 build
-!src/*
+runtime
 *.wasm
 test/message.txt
 node_modules
