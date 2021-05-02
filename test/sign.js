@@ -1,7 +1,7 @@
 const fs = require('fs')
 const crypto = require('crypto')
 
-const file = fs.readFileSync('../ed25519.wasm')
+const file = fs.readFileSync('build/ed25519.wasm')
 
 ;(async function() {
   const src = await WebAssembly.instantiate(file)
@@ -40,6 +40,5 @@ const file = fs.readFileSync('../ed25519.wasm')
   ed25519.free(messagePtr)
   ed25519.free(signedMessagePtr)
 
-  fs.writeFileSync('./message.txt', `${encodedMessage}\n${encodedSignature}\n${encodedPublicKey}`)
+  fs.writeFileSync('test/message.txt', `${encodedMessage}\n${encodedSignature}\n${encodedPublicKey}`)
 })()
-

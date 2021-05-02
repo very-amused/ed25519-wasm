@@ -9,7 +9,7 @@ import (
 )
 
 func getInput() (message, signature, publicKey []byte) {
-	file, err := ioutil.ReadFile("./message.txt")
+	file, err := ioutil.ReadFile("test/message.txt")
 	if err != nil {
 		panic(err)
 	}
