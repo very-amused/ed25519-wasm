@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "DOM",
+      "WebWorker",
+      "ES2020"
+    ],
+    "target": "ES2020",
+    "module": "ES2020",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "removeComments": true,
+    "strict": true
+  },
+  "include": [
+    "src/*.ts"
+  ]
+}
