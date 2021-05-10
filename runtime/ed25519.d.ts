@@ -1,31 +1,28 @@
+import * as connection from './connection';
 export declare namespace ED25519 {
-    type Ptr = number;
-    type Source = WebAssembly.WebAssemblyInstantiatedSource & {
-        instance: WebAssembly.Instance & {
-            exports: Exports;
-        };
-    };
-    type Exports = {
-        malloc(size: number): Ptr;
-        free(ptr: Ptr): void;
-        ed25519_keypair(seed: Ptr, publicKey: Ptr, privateKey: Ptr): void;
-    };
+    export import WorkerConnection = connection.WorkerConnection;
     const seedLen = 32;
     const publicKeyLen = 32;
     const privateKeyLen = 64;
     enum Methods {
-        LoadED25519 = 0
+        LoadED25519 = 0,
+        GenerateKeypair = 1
     }
+    type GenerateParameters = {
+        seed: Uint8Array;
+        omitPublicKey: boolean;
+    };
+    type LoadParameters = {
+        wasmPath: string;
+    };
     type Request = {
         method: Methods;
-        params: LoadED25519Params;
+        params: GenerateParameters | LoadParameters;
     };
     type Response = {
         code: ErrorCodes;
+        body?: GenerateResult['body'];
         message?: string;
-    };
-    type LoadED25519Params = {
-        wasmPath: string;
     };
     enum ErrorCodes {
         Success = 0,
