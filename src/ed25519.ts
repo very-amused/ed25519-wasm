@@ -18,6 +18,7 @@ export type Exports = {
   malloc(size: number): number
   free(ptr: number): void
   ed25519_keypair(seed: number, publicKey: number, privateKey: number): void
+  ed25519_sign(signedMessage: number, message: number, messageLen: number, privateKey: number): void
   memory: WebAssembly.Memory
 }
 
@@ -26,10 +27,12 @@ export import WorkerConnection = connection.WorkerConnection
 export const seedLen = 32
 export const publicKeyLen = 32
 export const privateKeyLen = 64
+export const signatureLen = 64
 
 export enum Methods {
   LoadED25519 = 0,
-  GenerateKeypair
+  GenerateKeypair,
+  SignMessage
 }
 
 export type GenerateParameters = {
@@ -37,16 +40,22 @@ export type GenerateParameters = {
   omitPublicKey: boolean
 }
 
-/**
- * @internal
- * Internal result structure for the generate function
- */
+export type SignParameters = {
+  message: Uint8Array
+  privateKey: Uint8Array
+}
+
 export type GenerateResult = {
   body: {
     publicKey: Uint8Array|null
     privateKey: Uint8Array
   }
+  /** @internal */
   transfer: Transferable[]
+}
+
+export type SignResult = {
+  signature: Uint8Array
 }
 
 export type LoadParameters = {
@@ -55,12 +64,12 @@ export type LoadParameters = {
 
 export type Request = {
   method: Methods
-  params: GenerateParameters|LoadParameters
+  params: GenerateParameters|LoadParameters|SignParameters
 }
 
 export type Response = {
   code: ErrorCodes
-  body?: GenerateResult['body']
+  body?: GenerateResult['body']|SignResult
   message?: string
 }
 

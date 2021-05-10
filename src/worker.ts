@@ -126,6 +126,42 @@ async function generate(seed: Uint8Array, omitPublicKey = true): Promise<ED25519
   }
 }
 
+async function sign(message: Uint8Array, privateKey: Uint8Array): Promise<Uint8Array> {
+  const { privateKeyLen, signatureLen } = ED25519
+
+  // Copy message and private key into WASM memory
+  const messageLen = message.length
+  const messagePtr = ed25519.malloc(messageLen)
+  const messageView = new Uint8Array(ed25519.memory.buffer, messagePtr, messageLen)
+  memCopy(messageView, message)
+
+  const privateKeyPtr = ed25519.malloc(privateKeyLen)
+  const privateKeyView = new Uint8Array(ed25519.memory.buffer, privateKeyPtr, privateKeyLen)
+  memCopy(privateKeyView, privateKey)
+
+  // Allocate buffer for signature result
+  const signedMessagePtr = ed25519.malloc(signatureLen + messageLen)
+
+  // Sign the message
+  ed25519.ed25519_sign(signedMessagePtr, messagePtr, messageLen, privateKeyPtr)
+
+  // Zero out and free the copied message and private key
+  zeroBytes(messageView)
+  ed25519.free(messagePtr)
+  zeroBytes(privateKeyView)
+  ed25519.free(privateKeyPtr)
+
+  // Copy the first 64 bytes of the signed message (the signature alone) to JS memory
+  const signedMessageView = new Uint8Array(ed25519.memory.buffer, signedMessagePtr, signatureLen + messageLen)
+  const signature = new Uint8Array(signatureLen)
+  memCopy(signature, signedMessageView.slice(0, 64))
+
+  zeroBytes(signedMessageView)
+  ed25519.free(signedMessagePtr)
+
+  return signature
+}
+
 onmessage = async function(evt: MessageEvent<ED25519.Request>): Promise<void> {
   const req = evt.data
 
@@ -150,6 +186,21 @@ onmessage = async function(evt: MessageEvent<ED25519.Request>): Promise<void> {
         code: ED25519.ErrorCodes.Success,
         body: result.body
       }, result.transfer)
+    } catch (err) {
+      postError(err)
+    }
+    break
+  
+  case ED25519.Methods.SignMessage:
+    try {
+      const params = req.params as ED25519.SignParameters
+      const signature = await sign(params.message, params.privateKey)
+      postMessage({
+        code: ED25519.ErrorCodes.Success,
+        body: {
+          signature
+        }
+      }, [signature.buffer])
     } catch (err) {
       postError(err)
     }

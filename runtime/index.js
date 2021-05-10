@@ -32,9 +32,11 @@ var ED25519;
     ED25519.seedLen = 32;
     ED25519.publicKeyLen = 32;
     ED25519.privateKeyLen = 64;
+    ED25519.signatureLen = 64;
     (function (Methods) {
         Methods[Methods["LoadED25519"] = 0] = "LoadED25519";
         Methods[Methods["GenerateKeypair"] = 1] = "GenerateKeypair";
+        Methods[Methods["SignMessage"] = 2] = "SignMessage";
     })(ED25519.Methods || (ED25519.Methods = {}));
     (function (ErrorCodes) {
         ErrorCodes[ErrorCodes["Success"] = 0] = "Success";

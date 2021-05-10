@@ -32,9 +32,11 @@ var ED25519;
     ED25519.seedLen = 32;
     ED25519.publicKeyLen = 32;
     ED25519.privateKeyLen = 64;
+    ED25519.signatureLen = 64;
     (function (Methods) {
         Methods[Methods["LoadED25519"] = 0] = "LoadED25519";
         Methods[Methods["GenerateKeypair"] = 1] = "GenerateKeypair";
+        Methods[Methods["SignMessage"] = 2] = "SignMessage";
     })(ED25519.Methods || (ED25519.Methods = {}));
     (function (ErrorCodes) {
         ErrorCodes[ErrorCodes["Success"] = 0] = "Success";
@@ -130,6 +132,28 @@ async function generate(seed, omitPublicKey = true) {
         transfer: publicKey !== null ? [publicKey.buffer, privateKey.buffer] : [privateKey.buffer]
     };
 }
+async function sign(message, privateKey) {
+    const { privateKeyLen, signatureLen } = ED25519;
+    const messageLen = message.length;
+    const messagePtr = ed25519.malloc(messageLen);
+    const messageView = new Uint8Array(ed25519.memory.buffer, messagePtr, messageLen);
+    memCopy(messageView, message);
+    const privateKeyPtr = ed25519.malloc(privateKeyLen);
+    const privateKeyView = new Uint8Array(ed25519.memory.buffer, privateKeyPtr, privateKeyLen);
+    memCopy(privateKeyView, privateKey);
+    const signedMessagePtr = ed25519.malloc(signatureLen + messageLen);
+    ed25519.ed25519_sign(signedMessagePtr, messagePtr, messageLen, privateKeyPtr);
+    zeroBytes(messageView);
+    ed25519.free(messagePtr);
+    zeroBytes(privateKeyView);
+    ed25519.free(privateKeyPtr);
+    const signedMessageView = new Uint8Array(ed25519.memory.buffer, signedMessagePtr, signatureLen + messageLen);
+    const signature = new Uint8Array(signatureLen);
+    memCopy(signature, signedMessageView.slice(0, 64));
+    zeroBytes(signedMessageView);
+    ed25519.free(signedMessagePtr);
+    return signature;
+}
 onmessage = async function (evt) {
     const req = evt.data;
     switch (req.method) {
@@ -153,6 +177,21 @@ onmessage = async function (evt) {
                     code: ED25519.ErrorCodes.Success,
                     body: result.body
                 }, result.transfer);
+            }
+            catch (err) {
+                postError(err);
+            }
+            break;
+        case ED25519.Methods.SignMessage:
+            try {
+                const params = req.params;
+                const signature = await sign(params.message, params.privateKey);
+                postMessage({
+                    code: ED25519.ErrorCodes.Success,
+                    body: {
+                        signature
+                    }
+                }, [signature.buffer]);
             }
             catch (err) {
                 postError(err);
