@@ -25,8 +25,8 @@ func main() {
 	message, signature, publicKey := getInput()
 
 	if ed25519.Verify(publicKey, message, signature) {
-		fmt.Println("Verification succeeded")
+		fmt.Println("\x1b[32mVerification succeeded\x1b[0m")
 	} else {
-		fmt.Println("Verification failed")
+		fmt.Println("\x1b[31mVerification failed\x1b[0m")
 	}
 }
