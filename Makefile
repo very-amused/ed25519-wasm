@@ -22,4 +22,4 @@ prepare:
 	if [ ! -d ed25519 ]; then $(SHELL) prepare.sh; fi
 
 clean:
-	rm -rf $(objects) $(outdir)
+	rm -rf $(objects) $(outdir) ed25519

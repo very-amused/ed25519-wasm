@@ -1,10 +1,11 @@
-const fs = require('fs')
-const crypto = require('crypto')
+import fs from 'fs'
+import crypto from 'crypto'
 
 const file = fs.readFileSync('build/ed25519.wasm')
 
 ;(async function() {
   const src = await WebAssembly.instantiate(file)
+  /** @type {import('../src/ed25519').ED25519.Exports} */
   const ed25519 = src.instance.exports
 
   const seedLen = 32
