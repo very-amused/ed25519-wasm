@@ -7,8 +7,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "rollup -c",
-    "build:all": "make && yarn build",
+    "build": "make prepare && make && rollup -c",
     "clean": "rm -rf build runtime",
     "test": "node test/sign.js && go run test/verify.go"
   },

@@ -1,7 +1,7 @@
 #! /bin/sh
 
 # Build a portable WASM binary of Daniel J. Bernstein's ref10 implementation of the ed25519 signature algorithm.
-SUPERCOP_VERSION=20210604
+SUPERCOP_VERSION=20211108
 SUPERCOP_SRC=supercop-${SUPERCOP_VERSION}
 
 get_supercop() {
