@@ -7,7 +7,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "make prepare && make && rollup -c",
+    "prebuild": "make prepare",
+    "build": "make && rollup -c",
     "clean": "rm -rf build runtime",
     "test": "node test/sign.js && go run test/verify.go"
   },

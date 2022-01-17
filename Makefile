@@ -19,7 +19,7 @@ ed25519/%.wasm.o: ed25519/%.c
 	emcc -c -o $@ $< $(CFLAGS)
 
 prepare:
-	./prepare.sh
+	if [ ! -d ed25519 ]; then $(SHELL) prepare.sh; fi
 
 clean:
 	rm -rf $(objects) $(outdir)
