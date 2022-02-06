@@ -1,0 +1,5 @@
+*
+!package.json
+!yarn.lock
+!runtime/*.{js,d.ts}
+!build/*.{js/wasm}

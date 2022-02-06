@@ -28,7 +28,9 @@ export default [
     },
     plugins: [
       typescript({
-        tsconfig: 'tsconfig-runtime.json'
+        outDir: 'runtime',
+        declaration: true,
+        exclude: ['src/worker.ts']
       })
     ]
   }
