@@ -1,7 +1,7 @@
 O=-O3
-CFLAGS=$(O) -Wall
+CFLAGS=$(O) -Wall -I ed25519
 EXPORTED_FUNCTIONS=_malloc,_free,_ed25519_keypair,_ed25519_sign
-BUILD_FLAGS=-s EXPORTED_FUNCTIONS=$(EXPORTED_FUNCTIONS) --no-entry -I ed25519
+BUILD_FLAGS=--no-entry -s EXPORTED_FUNCTIONS=$(EXPORTED_FUNCTIONS)
 
 src=ed25519/keypair.c ed25519/sign.c \
 	ed25519/ge.c ed25519/fe.c ed25519/sc_muladd.c ed25519/sc_reduce.c \
@@ -9,10 +9,10 @@ src=ed25519/keypair.c ed25519/sign.c \
 objects=$(src:.c=.wasm.o)
 
 outdir=build
+$(shell if [ ! -d $(outdir) ]; then mkdir $(outdir); fi)
 outfile=$(outdir)/ed25519.wasm
 
 $(outfile): $(objects)
-	if [ ! -d $(outdir) ]; then mkdir $(outdir); fi
 	emcc -o $(outfile) $(objects) $(CFLAGS) $(BUILD_FLAGS)
 
 ed25519/%.wasm.o: ed25519/%.c
