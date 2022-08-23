@@ -1,6 +1,6 @@
 {
   "name": "@very-amused/ed25519-wasm",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "main": "runtime/index.js",
   "repository": "https://github.com/very-amused/ed25519-wasm.git",
