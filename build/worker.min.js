@@ -1,6 +1,6 @@
 /**
  * @license
- * ed25519-wasm v0.1.2
+ * ed25519-wasm v0.1.3
  * MIT License
  * Copyright (c) 2022 Keith Scroggs
  */
