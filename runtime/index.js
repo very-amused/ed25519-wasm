@@ -1,3 +1,9 @@
+/**
+ * @license
+ * ed25519-wasm v0.1.1
+ * MIT License
+ * Copyright (c) 2022 Keith Scroggs
+ */
 class WorkerConnection {
     constructor(worker) {
         this.worker = worker;

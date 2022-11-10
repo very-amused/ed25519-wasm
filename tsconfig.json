@@ -8,6 +8,8 @@
     "target": "ES2020",
     "module": "ES2020",
     "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
     "skipLibCheck": true,
     "removeComments": true,
     "strict": true,

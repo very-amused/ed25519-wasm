@@ -1,5 +1,13 @@
 import typescript from '@rollup/plugin-typescript'
 import { terser } from 'rollup-plugin-terser'
+import pkg from './package.json'
+
+const banner = `/**
+ * @license
+ * ed25519-wasm v${pkg.version}
+ * MIT License
+ * Copyright (c) 2022 Keith Scroggs
+ */`
 
 export default [
   {
@@ -7,11 +15,13 @@ export default [
     output: [
       {
         file: 'build/worker.js',
-        format: 'es'
+        format: 'es',
+        banner
       },
       {
         file: 'build/worker.min.js',
         format: 'es',
+        banner,
         plugins: [
           terser()
         ]
@@ -24,7 +34,8 @@ export default [
   {
     input: 'src/index.ts',
     output: {
-      dir: 'runtime'
+      dir: 'runtime',
+      banner
     },
     plugins: [
       typescript({
