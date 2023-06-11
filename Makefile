@@ -20,6 +20,8 @@ ed25519/%.wasm.o: ed25519/%.c
 
 prepare:
 	if [ ! -d ed25519 ]; then $(SHELL) prepare.sh; fi
+.PHONY: prepare
 
 clean:
 	rm -rf $(objects) $(outdir) ed25519
+.PHONY: prepare
